@@ -1,9 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Const;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Message;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +13,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("/chat")
 public class ChatController {
 
-    AtomicLong messageId = new AtomicLong(0);
-
     List<Message> messages = new ArrayList<Message>(){{
-        add(new Message(messageId.get(), Const.ADMIN_ID, "hello", new Date()));
-        add(new Message(messageId.incrementAndGet(), Const.ADMIN_ID, "world", new Date()));
-        add(new Message(messageId.incrementAndGet(), Const.ADMIN_ID, "it is", new Date()));
-        add(new Message(messageId.incrementAndGet(), Const.ADMIN_ID, "me", new Date()));
+//        add(new Message(messageId.get(), "hello", new Date()));
+//        add(new Message(messageId.incrementAndGet(), "world", new Date()));
+//        add(new Message(messageId.incrementAndGet(), "it is", new Date()));
+//        add(new Message(messageId.incrementAndGet(), "me", new Date()));
     }};
 
     @GetMapping
@@ -34,10 +32,8 @@ public class ChatController {
 
     @PostMapping()
     private Message create (@RequestBody String mess){
-        long userId = Const.ADMIN_ID;
 
-        Message message = new Message(messageId.incrementAndGet(),
-                userId,
+        Message message = new Message(
                 mess,
                 new Date());
 
@@ -57,7 +53,7 @@ public class ChatController {
 
     private Message getMessage(long id){
         return messages.stream()
-                .filter(message -> message.getId()==id)
+                .filter(message -> message.getMessid()==id)
                 .findFirst()
                 .orElseThrow(NotFoundException::new);
     }

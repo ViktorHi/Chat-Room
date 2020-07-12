@@ -1,28 +1,35 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table (name = "jmess")
 public class Message {
 
-    final long id;
-    final long userId;
-    final String text;
-    final Date sendingTime;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private int messid;
 
-    public Message(long id, long userId, String text, Date sendingTime) {
-        this.id = id;
-        this.userId = userId;
+    @Column(name = "messtext")
+    private String text;
+
+    @Column(name = "messpostime")
+    private Date sendingTime;
+
+    //region constructors
+    protected Message() {
+    }
+
+    public Message(String text, Date sendingTime) {
         this.text = text;
         this.sendingTime = sendingTime;
     }
+    //endregion
 
     //region set get
-    public long getId() {
-        return id;
-    }
-
-    public long getUserId() {
-        return userId;
+    public long getMessid() {
+        return messid;
     }
 
     public String getText() {
@@ -33,4 +40,13 @@ public class Message {
         return sendingTime;
     }
     //endregion
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "messid=" + messid +
+                ", text='" + text + '\'' +
+                ", sendingTime=" + sendingTime +
+                '}';
+    }
 }
