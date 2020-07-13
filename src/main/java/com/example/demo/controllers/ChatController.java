@@ -5,9 +5,7 @@ import com.example.demo.model.Message;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/chat")
@@ -34,8 +32,8 @@ public class ChatController {
     private Message create (@RequestBody String mess){
 
         Message message = new Message(
-                mess,
-                new Date());
+                mess
+        );
 
         synchronized (this){
             messages.add(message);

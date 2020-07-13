@@ -21,14 +21,14 @@ public class Message {
     protected Message() {
     }
 
-    public Message(String text, Date sendingTime) {
+    public Message(String text) {
         this.text = text;
-        this.sendingTime = sendingTime;
+        this.sendingTime = new Date();
     }
     //endregion
 
     //region set get
-    public long getMessid() {
+    public int getMessid() {
         return messid;
     }
 
@@ -39,6 +39,11 @@ public class Message {
     public Date getSendingTime() {
         return sendingTime;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     //endregion
 
     @Override

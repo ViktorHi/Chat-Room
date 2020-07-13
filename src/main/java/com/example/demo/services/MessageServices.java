@@ -4,7 +4,6 @@ import com.example.demo.dao.message.MessageDAO;
 import com.example.demo.dao.message.MessageDAOImpl;
 import com.example.demo.model.Message;
 
-import java.util.Date;
 import java.util.List;
 
 public class MessageServices {
@@ -31,20 +30,4 @@ public class MessageServices {
         return messageDAO.getAll();
     }
 
-
-    public static void main(String[] args) {
-        MessageServices ms = new MessageServices();
-
-        Message hello = new Message("today", new Date());
-        System.out.println("message, before saving in db" + hello);
-
-        ms.save(hello);
-        System.out.println("saving success");
-
-        List<Message> all = ms.getAll();
-        System.out.println("extracting success");
-
-        System.out.println("message, retrieved from db");
-        all.forEach(System.out::println);
-    }
 }
