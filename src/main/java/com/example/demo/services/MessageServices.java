@@ -10,23 +10,23 @@ public class MessageServices {
 
     private final MessageDAO messageDAO = new MessageDAOImpl();
 
-    void save(Message message) {
+    public void save(Message message) {
         messageDAO.save(message);
     }
 
-    Message getById(int id) {
+    public Message getById(int id) {
         return messageDAO.getById(id);
     }
 
-    void update(Message message) {
+    public void update(Message message) {
         messageDAO.update(message);
     }
 
-    void delete(Message message) {
+    public void delete(Message message) {
         messageDAO.delete(message);
     }
 
-    List<Message> getAll(){
+    public List<Message> getAll(){
         return messageDAO.getAll();
     }
 

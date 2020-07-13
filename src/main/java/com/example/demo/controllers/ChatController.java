@@ -1,58 +1,41 @@
 package com.example.demo.controllers;
 
-import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Message;
+import com.example.demo.services.MessageServices;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
 
-    List<Message> messages = new ArrayList<Message>(){{
-//        add(new Message(messageId.get(), "hello", new Date()));
-//        add(new Message(messageId.incrementAndGet(), "world", new Date()));
-//        add(new Message(messageId.incrementAndGet(), "it is", new Date()));
-//        add(new Message(messageId.incrementAndGet(), "me", new Date()));
-    }};
+    private final MessageServices messageServices = new MessageServices();
 
     @GetMapping
     private synchronized List<Message> getList(){
-        return messages;
+        return messageServices.getAll();
     }
 
     @GetMapping("{id}")
     private synchronized Message getOne(@PathVariable String id){
-        return getMessage(Long.parseLong(id));
+        return messageServices.getById(Integer.parseInt(id));
     }
 
     @PostMapping()
     private Message create (@RequestBody String mess){
+        Message message = new Message(mess);
 
-        Message message = new Message(
-                mess
-        );
-
-        synchronized (this){
-            messages.add(message);
-        }
+        messageServices.save(message);
 
         return message;
     }
 
     @DeleteMapping("{id}")
-    private void delete (@PathVariable long id){
-        Message mess = getMessage(id);
+    private void delete (@PathVariable int id){
 
-        messages.remove(mess);
+        Message toDel = messageServices.getById(id);
+        messageServices.delete(toDel);
     }
 
-    private Message getMessage(long id){
-        return messages.stream()
-                .filter(message -> message.getMessid()==id)
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
-    }
 }
